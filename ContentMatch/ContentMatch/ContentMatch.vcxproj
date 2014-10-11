@@ -60,14 +60,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ArticleAnalyze.h" />
-    <ClInclude Include="CompareArticles.h" />
-    <ClInclude Include="ModifyResult.h" />
+    <None Include="config\simhash.config.xml" />
+    <None Include="lib\libICTTextMining.a" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ArticleAnalyze.cpp" />
-    <ClCompile Include="CompareArticles.cpp" />
-    <ClCompile Include="ModifyResult.cpp" />
+    <ClInclude Include="include\SimHashAPI.h" />
+    <ClInclude Include="src\ArticleAnalyze.h" />
+    <ClInclude Include="src\CompareArticles.h" />
+    <ClInclude Include="src\ModifyResult.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\ArticleAnalyze.cpp" />
+    <ClCompile Include="src\CompareArticles.cpp" />
+    <ClCompile Include="src\ModifyResult.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

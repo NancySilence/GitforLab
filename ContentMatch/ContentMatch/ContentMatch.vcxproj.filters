@@ -15,24 +15,34 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArticleAnalyze.h">
+    <None Include="config\simhash.config.xml" />
+    <None Include="lib\libICTTextMining.a" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\SimHashAPI.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="CompareArticles.h">
+    <ClInclude Include="src\ArticleAnalyze.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ModifyResult.h">
+    <ClInclude Include="src\CompareArticles.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ModifyResult.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ArticleAnalyze.cpp">
+    <ClCompile Include="src\ArticleAnalyze.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CompareArticles.cpp">
+    <ClCompile Include="src\CompareArticles.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ModifyResult.cpp">
+    <ClCompile Include="src\ModifyResult.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
