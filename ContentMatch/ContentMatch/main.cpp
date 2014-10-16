@@ -1,30 +1,28 @@
 #include <iostream>
 #include <string>
-#include "include/SimHashAPI.h"
+#include "../include/SimHashAPI.h"
 
 using namespace std;
 
 int main(void)
 {
-	int returnResult;
-	SH_H ** handle;
-	string  testSim= "Start from something new";
-
+//for each string.
 	char ConfigFile[40] = "config/simhash.config.xml";
 	uint64_t HashResult;
+	int returnResult;
+	SH_H * handle;
 
-	returnResult = SH_Init(ConfigFile,  handle);
-	cout<<"Init Result:"<<returnResult<<endl;
+	//Iteration Start
+	string  testSim= "Start from something new";
+	
+	returnResult = SH_Init(ConfigFile,  &handle);
+	cout<<"InitResult:"<<returnResult<<endl;
 
 	returnResult = SH_Get(handle, testSim, HashResult);
-
-	cout<<"Get Result:"<<returnResult<<endl;
-
-	cout<<"SimHash Result:"<<HashResult<<endl;
-
+	cout<<"GetResult:"<<returnResult<<endl;
+	cout<<endl<<"HashResult:!!"<<HashResult<<endl;
 	returnResult = SH_Exit(handle);
-	cout<<"Exit Result:"<<returnResult<<endl;
 
-	cin>>returnResult;
+	cout<<"ExitResult:"<<returnResult<<endl;
 	return 0;
 }
