@@ -28,7 +28,7 @@ public:
     vector<ModifyResult> Processing(void);
 
 private:
-	int CalcSimHashDistance(uint64_t A,uint64_t b);
+	int CalcSimHashDistance(uint64_t A,uint64_t B);
 	void InitiateMarkedLabel(ArticleAnalyze);
 
 private:

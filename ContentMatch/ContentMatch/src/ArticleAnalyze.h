@@ -17,7 +17,7 @@ public:
     { }
 
 public:
-    bool init(char *inputArticle);
+    bool init(string inputArticle);
     bool SplitAndCalcSimHash();
 	
 public:

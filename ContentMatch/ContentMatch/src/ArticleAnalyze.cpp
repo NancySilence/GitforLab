@@ -42,7 +42,7 @@ bool ArticleAnalyze::SplitAndCalcSimHash()
 	int returnResult;
 	SH_H * handle;
 
-	//Iteration Start
+	
 	string  testSim= "Start from something new";
 	
 	returnResult = SH_Init(ConfigFile,  &handle);
@@ -51,13 +51,19 @@ bool ArticleAnalyze::SplitAndCalcSimHash()
        	perror("SimHashInitFailed\n");
        	exit(EXIT_FAILURE);
 	}
-
+	
+	//Iteration Start
 	returnResult = SH_Get(handle, testSim, HashResult);
 	if (returnResult = 0)
 	{
        	perror("SimHashGetFailed\n");
        	exit(EXIT_FAILURE);
 	}
+		EachSentence.push_back(testSim);
+	SimHashValue.push_back(HashResult);
+	//Iteration End
+	
+	
 	returnResult = SH_Exit(handle);
 
 	if (returnResult = 0)
@@ -66,10 +72,7 @@ bool ArticleAnalyze::SplitAndCalcSimHash()
        	exit(EXIT_FAILURE);
 	}
 
-	EachSentence.push_back(testSim);
-	SimHashValue.push_back(HashResult);
 
-	//Iteration End
 
 	return true;
 }

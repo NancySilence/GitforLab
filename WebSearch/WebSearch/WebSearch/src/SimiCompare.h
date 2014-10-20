@@ -27,9 +27,9 @@ public:
 	vector<MetaData> FilterAnalyze(void);
 
 private:
-	vector<double> ListSimiCamp(string,vector<string>);
-	int FindLargest(vector<double>);
-	vector<MetaData> FilterByThreshold(vector<double>);
+	vector<double> ListSimiCamp(&string,&vector<string>);
+	int FindLargest(&vector<double>);
+	vector<MetaData> FilterByThreshold(&vector<double>);
 
 	struct MetaResult TotalReturnResult;
 	string KeyWords;
