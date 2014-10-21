@@ -25,6 +25,19 @@ vector<MetaData> SimiCompare::FilterAnalyze(void)
 
 	//////////////////////////////////////////////////////////////////////////
 	//Calculate about title
+	//Init
+	char ConfigFile[40] = "config/sim.config.xml";
+	int returnResult;
+	returnResult = Sim_Init(ConfigFile,  &handle);
+	if (returnResult = 0)
+	{
+       	perror("SimCalcInitFailed\n");
+       	exit(EXIT_FAILURE);
+	}
+
+
+
+	////////////////////////start/////////////////////////
 	vector<double> SimiTitles = ListSimiCamp(KeyWords,TotalTitles);
 	
 	int LargestIndex = FindLargest(SimiTitles);
@@ -42,6 +55,18 @@ vector<MetaData> SimiCompare::FilterAnalyze(void)
 	int size = finalResults.size();
 	sort(finalResults.begin(),finalResults.begin()+size,comparep);
 
+	reverse(finalResults.begin(),finalResults.begin()+size);
+
+
+	//////////////////////////end////////////////////////////
+
+	//exit
+	returnResult = Sim_Exit(handle);
+	if (returnResult = 0)
+	{
+       	perror("SimCalcExitFailed\n");
+       	exit(EXIT_FAILURE);
+	}
 
 	return finalResults;
 
@@ -49,34 +74,17 @@ vector<MetaData> SimiCompare::FilterAnalyze(void)
 }
 
 
-vector<double> SimiCompare::ListSimiCamp(string key,vector<string> Lists)
+vector<double> SimiCompare::ListSimiCamp(string& key,vector<string>& Lists)
 {
-	char ConfigFile[40] = "config/sim.config.xml";
 	vector<double> Simi;
 	int returnResult;
-	SIM_H * handle;
 
 	//SimiForTitle
 	//////////////////////////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Problem see TextSimAPITest
-	returnResult = Sim_Init(ConfigFile,  &handle);
-	if (returnResult = 0)
-	{
-       	perror("SimCalcInitFailed\n");
-       	exit(EXIT_FAILURE);
-	}
-
-
 	returnResult = Sim_Get(handle, key, Lists,Simi);
 	if (returnResult = 0)
 	{
        	perror("SimCalcGetFailed\n");
-       	exit(EXIT_FAILURE);
-	}
-
-	returnResult = Sim_Exit(handle);
-	if (returnResult = 0)
-	{
-       	perror("SimCalcExitFailed\n");
        	exit(EXIT_FAILURE);
 	}
 	////////////////////////////////////////////////////////////////////////////////
@@ -86,7 +94,7 @@ vector<double> SimiCompare::ListSimiCamp(string key,vector<string> Lists)
 }
 
 //TODO
-int SimiCompare::FindLargest (vector<double> Numbers)
+int SimiCompare::FindLargest (vector<double>& Numbers)
 {
 	int maxIndex;
 	//!!!!!!!!!!!!!!!!test
@@ -102,7 +110,7 @@ int SimiCompare::FindLargest (vector<double> Numbers)
 	return maxIndex;
 }
 
-vector<MetaData> SimiCompare::FilterByThreshold(vector<double> Numbers)
+vector<MetaData> SimiCompare::FilterByThreshold(vector<double> & Numbers)
 {
 	vector<MetaData> result;
 	for(int i = 0;i<Numbers.size();i++)

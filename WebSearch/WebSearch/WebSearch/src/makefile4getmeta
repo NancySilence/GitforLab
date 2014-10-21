@@ -1,0 +1,5 @@
+all:	./src/GetMeta.cpp 
+	 g++ -o Test ./src/GetMeta.cpp  -I./include -L./lib -lgetmeta -lpthread -lidn -lldap -lrt -ljson -L./usr/local/lib
+clean:
+	rm -f *.o 
+

@@ -2,9 +2,8 @@
 #include <set>
 #include <cmath>
 
-#include "GetMeta.h"
-#include "json/json.h"
-#include "GetMeta.h"
+#include "../include/GetMeta.h"
+#include "../include/json/json.h"
 
 using namespace std;
 using namespace Json;

@@ -21,10 +21,10 @@
     <ClCompile Include="src\Test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\TextSimAPITest.cpp">
+    <ClCompile Include="src\SimiCompare.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\SimiCompare.cpp">
+    <ClCompile Include="src\WebSearchTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -63,7 +63,7 @@
     <ClCompile Include="src\GetMeta.cpp" />
     <ClCompile Include="src\SimiCompare.cpp" />
     <ClCompile Include="src\Test.cpp" />
-    <ClCompile Include="src\TextSimAPITest.cpp" />
+    <ClCompile Include="src\WebSearchTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GetMeta.h" />
