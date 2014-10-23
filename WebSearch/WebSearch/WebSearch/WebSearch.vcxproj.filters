@@ -18,9 +18,6 @@
     <ClCompile Include="src\GetMeta.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Test.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\SimiCompare.cpp">
       <Filter>源文件</Filter>
     </ClCompile>

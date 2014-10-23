@@ -99,7 +99,7 @@ int SimiCompare::FindLargest (vector<double>& Numbers)
 	int maxIndex;
 	//!!!!!!!!!!!!!!!!test
 	double maxValue = -1;
-	for(int i = 0;i<Numbers.size();i++)
+	for(unsigned int i = 0;i < Numbers.size();i++)
 	{
 		if(Numbers[i]>maxValue)
 		{
@@ -113,7 +113,7 @@ int SimiCompare::FindLargest (vector<double>& Numbers)
 vector<MetaData> SimiCompare::FilterByThreshold(vector<double> & Numbers)
 {
 	vector<MetaData> result;
-	for(int i = 0;i<Numbers.size();i++)
+	for(unsigned int i = 0;i<Numbers.size();i++)
 	{
 		if(Numbers[i]>SIMITHRESHOLD)
 		{

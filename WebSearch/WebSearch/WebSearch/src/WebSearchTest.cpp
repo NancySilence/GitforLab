@@ -31,7 +31,7 @@ int main(void)
 		);
 	ofstream fout(fileName);
 	string temp;
-	for(int i = 0;i<finalResult.size();i++)
+	for(unsigned int i = 0;i<finalResult.size();i++)
 	{
 		temp = finalResult[i].title+" "+finalResult[i].pubtime+" "+finalResult[i].abstract;
 		fout <<temp<<endl; // fout用法和cout一致, 不过是写到文件里面去
