@@ -24,7 +24,7 @@ public class ImmutableQueue<E> {
 	
 	}
 	
-	//When the queue is only contain one element
+	//Constructor by another EachNode element
 	public ImmutableQueue(E oneNode) 
 	{
 		if(oneNode == null)
@@ -41,6 +41,7 @@ public class ImmutableQueue<E> {
 		}
 	}
 	
+	//Constructor by another ImmutableQueue
 	public ImmutableQueue(ImmutableQueue<E> formerQueue)
 	{
 		if(formerQueue == null || formerQueue.HeadNode == null)
@@ -179,6 +180,7 @@ public class ImmutableQueue<E> {
 	}
 }
 
+//Queue basic element
 class EachNode<E> 
 {
 	E element;

@@ -1,6 +1,5 @@
 package jp.co.worksap.global;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -10,6 +9,7 @@ public class Orienteering {
 	
 		public static void main(String[] args) {
 		// TODO: Implement your program
+
 			Orienteering ort = new Orienteering();
 			int FunctionReturn = ort.MatrixInitiation();
 			
@@ -18,7 +18,6 @@ public class Orienteering {
 				System.out.println(ort.FinalDistance);
 				return;
 			}
-			
 
 			//Make sure every dis matrix is carefully initiated. 
 			for(int i = 0;i<ort.CheckPointNumb+2;i++)
@@ -29,6 +28,7 @@ public class Orienteering {
 				ort.SpecialPoints[i].ToOtherDis[i] = 0;
 			}
 			
+			//Calculate every two points'distance in SpecialPoints set
 			for(int i = 0;i<ort.CheckPointNumb+2;i++)
 			{
 				FunctionReturn = ort.CalcTwoPointsDistance(i);
@@ -53,7 +53,10 @@ public class Orienteering {
 		int width;
 		int CheckPointNumb;
 		int FinalDistance;
+		
+		//0:Start; 1:End; 2-(CheckPointNumb+1): checkpoint
 		Point[] SpecialPoints;
+		//[width][height]
 		Point[][] AllPoints;
 		
 		public int MatrixInitiation()
@@ -68,6 +71,7 @@ public class Orienteering {
 			}
 			
 			CheckPointNumb = 0;
+			
 			//0:Start; 1:End; 2-(CheckPointNumb+1): checkpoint
 			SpecialPoints = new Point[20];
 			AllPoints = new Point [width][height];
@@ -130,10 +134,11 @@ public class Orienteering {
 			
 		}
 		
-		
+		//Distances from SpecialPoints[OriginalIndex] to all the other specialpoints.  
+		//BFS method
 		public int CalcTwoPointsDistance(int OriginalIndex)
 		{
-			//Initiation
+			//Initiation the color and distance
 			 for (int i=0;i<width;i++)
 			 {
 				 for(int j=0;j<height;j++)
@@ -186,6 +191,7 @@ public class Orienteering {
 			 }
 			 
 
+			 //move the distance to the SpecialPoints Array. 
 			 for(int i = 0;i<CheckPointNumb+2;i++)
 			 {
 				 SpecialPoints[i].ToOtherDis[OriginalIndex] = AllPoints[SpecialPoints[i].x][SpecialPoints[i].y].distance;
@@ -201,6 +207,7 @@ public class Orienteering {
 			 return 0;
 		}
 		
+		//Find the distance from start to goal. 
 		public void FindDistance()
 		{
 			if(CheckPointNumb == 0)
@@ -216,54 +223,18 @@ public class Orienteering {
 			else
 			{
 				FinalDistance = Integer.MAX_VALUE;
-				int tempDist;
-				int IndexBefore;
-				int IndexNow;
-				boolean stopTheList = false;
-				Arrange AllArrange = new Arrange(CheckPointNumb);  
+				
+				//use arrangement method to make sure every order of the checkpoint is checked unless the checkpoint 
+				//distance is larger than current finaldistance. 
+				Arrange AllArrange = new Arrange(CheckPointNumb,SpecialPoints);  
 				AllArrange.perm(0, CheckPointNumb-1);  
-		        for (int i = 0; i < AllArrange.getArrangeList().size(); i++) 
-		        {  
-		            tempDist = 0;
-		            IndexBefore = 0;
-		            stopTheList = false;
-		            Integer OrderList[] = AllArrange.getArrangeList().get(i);
-		            
-		            for(int j = 0;j<CheckPointNumb;j++)
-		            {
-		            	IndexNow = OrderList[j];
-		            	int newDist = SpecialPoints[IndexBefore].ToOtherDis[IndexNow];
-		            	if(newDist == Integer.MAX_VALUE || tempDist > FinalDistance)
-		            	{
-		            		stopTheList = true;
-		            		break;
-		            	}
-		            	else
-		            	{
-		            		tempDist +=newDist;
-		            		IndexBefore = IndexNow;
-		            	}
-		            }
-		            		            
-		            if(stopTheList)
-		            	continue;
-		            //Calculate to the goal point.
-		            IndexNow = 1;
-		            int newDist = SpecialPoints[IndexBefore].ToOtherDis[IndexNow];
-	            	if(newDist != Integer.MAX_VALUE )
-	            	{
-	            		tempDist +=newDist;
-	            		if(tempDist<FinalDistance)
-	            			FinalDistance = tempDist;
-	            	}		             
-		        }
-		        
+
+				FinalDistance = AllArrange.FinalDistance;
 		        if(FinalDistance == Integer.MAX_VALUE)
 		        {
 		        	FinalDistance = -1;
 		        }
 		        return;
-
 			}
 		}
 }
@@ -278,21 +249,27 @@ class Point{
 		type = typei;
 	}
 public  
+	//width and height
     int x;  
     int y;  
+    
     // 0:start; 1:end; 2 checkpoint;3:go through; 4: cannot pass
     int type;
+    
     //0:white ; 1:gray;2 :black;
     int color;
     
-    //temp record for BFS
+    //temp record from original for BFS use
     int distance;
     
     //record the special points distance between each others
+    //Index is corresponding with SpecialPoints.
     int[] ToOtherDis;
+    
 }; 
 
 
+//Used to queue the data.
 class Pair{
 	public Pair(int xi,int yi)
 	{
@@ -305,51 +282,81 @@ class Pair{
 
 class Arrange {  
 	  
-    int total = 0;  
-    private ArrayList<Integer[]> arrangeList = new ArrayList<Integer[]>();  
     private Integer list[];
     private int Number;
+    public Point[] SpecialPoints;
+    public int FinalDistance;
   
-    public Arrange(int Numb) {
+    public Arrange(int Numb,Point[] Points) 
+    {
     	Number = Numb;
+    	SpecialPoints = Points;
     	list = new Integer [Numb];
+    	FinalDistance = Integer.MAX_VALUE;
     	for(int i = 0;i<Numb;i++)
     	{
     		list[i] = i+2;
     	}
     }  
   
-    private void swap(Integer list[], int k, int i) {  
+    private void swap(Integer list[], int k, int i) 
+    {  
         Integer c3 = list[k];  
         list[k] = list[i];  
         list[i] = c3;  
     }  
   
-    public void perm(int k,int m) { 
-    	if (k > m) {  
+    public void perm(int k,int m) 
+    { 
+    	if (k > m) 
+    	{  
             Integer sb[] = new Integer[Number];  
-            for (int i = 0; i <= m; i++) {  
-                sb[i] = list[i];  
-            }  
-             
-            arrangeList.add(sb);  
-            total++;  
-        } else {  
-            for (int i = k; i <= m; i++) {  
-                swap(list, k, i);  
+            for (int i = 0; i <= m; i++)
+            	sb[i] = list[i];  
+            setdistance(sb);
+        } 
+    	else 
+    	{  
+    		for (int i = k; i <= m; i++) 
+    		{  
+    			swap(list, k, i);  
                 perm(k + 1, m);  
                 swap(list, k, i);  
             }  
         }  
-    }  
-  
-    public int getTotal() {  
-        return total;  
-    }  
-      
-    public ArrayList<Integer[]> getArrangeList() {  
-        return arrangeList;  
-    }  
+    }
+    
+    //check whether the Order of orderlist is min in this case. 
+	public void setdistance(Integer[] OrderList)
+	{
+		int tempDist = 0;
+		int IndexBefore = 0;
+		int IndexNow;
+        
+        for(int j = 0;j<Number;j++)
+        {
+        	IndexNow = OrderList[j];
+        	int newDist = SpecialPoints[IndexBefore].ToOtherDis[IndexNow];
+        	if(newDist == Integer.MAX_VALUE || tempDist > FinalDistance)
+        	{
+        		return;
+        	}
+        	else
+        	{
+        		tempDist +=newDist;
+        		IndexBefore = IndexNow;
+        	}
+        }
+        //Calculate to the goal point.
+        IndexNow = 1;
+        int newDist = SpecialPoints[IndexBefore].ToOtherDis[IndexNow];
+    	if(newDist != Integer.MAX_VALUE )
+    	{
+    		tempDist +=newDist;
+    		if(tempDist<FinalDistance)
+    			FinalDistance = tempDist;
+    	}
+	}
   
   
 };

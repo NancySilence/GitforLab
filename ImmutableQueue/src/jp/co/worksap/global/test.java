@@ -5,16 +5,17 @@ public class test {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		ImmutableQueue<Integer>immutableQueue = new ImmutableQueue<Integer>(5); 
+		ImmutableQueue<Integer>immutableQueue = new ImmutableQueue<Integer>(); 
+		ImmutableQueue<Integer> immutableQueue2 = immutableQueue.enqueue(88); 
  
 		EachNode<Integer>head =null; 
         System.out.println("First?///////////////////////////");
         for(head = immutableQueue.HeadNode;head!=null;head = head.next){ 
-            System.out.println(head.element+"&"); 
+            System.out.println(head.element+" "); 
         }  
-		System.out.println("size: "+ immutableQueue.size()+" top: "+ immutableQueue.peek());
+		//System.out.println("size: "+ immutableQueue.size()+" top: "+ immutableQueue.peek());
         //Test equeue 
-        ImmutableQueue<Integer> immutableQueue2 = immutableQueue.enqueue(88); 
+        immutableQueue2 = immutableQueue2.enqueue(88); 
         //Test dequeue 
         
         immutableQueue2 = immutableQueue2.enqueue(32); 
@@ -23,7 +24,7 @@ public class test {
         ImmutableQueue<Integer> immutableQueue3 = immutableQueue2.dequeue();
         immutableQueue3 = immutableQueue3.dequeue();
         immutableQueue3 = immutableQueue3.dequeue();
-        immutableQueue3 = immutableQueue3.dequeue();
+        //immutableQueue3 = immutableQueue3.dequeue();
         
         
          
@@ -40,14 +41,14 @@ public class test {
         for(head = immutableQueue3.HeadNode;head!=null;head = head.next){ 
             System.out.println(head.element+" "); 
         } 
-        System.out.println("size: "+ immutableQueue3.size()+" top: "+ immutableQueue3.peek());
+        //System.out.println("size: "+ immutableQueue3.size()+" top: "+ immutableQueue3.peek());
          
         
         System.out.println("First?///////////////////////////");
         for(head = immutableQueue.HeadNode;head!=null;head = head.next){ 
             System.out.println(head.element+" "); 
         } 
-        System.out.println("size: "+ immutableQueue.size()+" top: "+ immutableQueue.peek());
+        //System.out.println("size: "+ immutableQueue.size()+" top: "+ immutableQueue.peek());
         
 	}
 
