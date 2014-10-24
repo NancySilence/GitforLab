@@ -11,9 +11,9 @@ public class Orienteering {
 		public static void main(String[] args) {
 		// TODO: Implement your program
 			Orienteering ort = new Orienteering();
-			int InitReturn = ort.MatrixInitiation();
+			int FunctionReturn = ort.MatrixInitiation();
 			
-			if(InitReturn == -1)
+			if(FunctionReturn == -1)
 			{
 				System.out.println(ort.FinalDistance);
 				return;
@@ -31,7 +31,12 @@ public class Orienteering {
 			
 			for(int i = 0;i<ort.CheckPointNumb+2;i++)
 			{
-				ort.CalcTwoPointsDistance(i);
+				FunctionReturn = ort.CalcTwoPointsDistance(i);
+				if(FunctionReturn == -1)
+				{
+					System.out.println(ort.FinalDistance);
+					return;
+				}
 			}
 			
 			ort.FindDistance();
@@ -126,7 +131,7 @@ public class Orienteering {
 		}
 		
 		
-		public void CalcTwoPointsDistance(int OriginalIndex)
+		public int CalcTwoPointsDistance(int OriginalIndex)
 		{
 			//Initiation
 			 for (int i=0;i<width;i++)
@@ -185,9 +190,15 @@ public class Orienteering {
 			 {
 				 SpecialPoints[i].ToOtherDis[OriginalIndex] = AllPoints[SpecialPoints[i].x][SpecialPoints[i].y].distance;
 				 SpecialPoints[OriginalIndex].ToOtherDis[i] = AllPoints[SpecialPoints[i].x][SpecialPoints[i].y].distance;
+				 if(AllPoints[SpecialPoints[i].x][SpecialPoints[i].y].distance == Integer.MAX_VALUE)
+				 {
+					 FinalDistance = -1;
+					 return -1;
+				 }
+			 
 			 }
 			 
-			 return;
+			 return 0;
 		}
 		
 		public void FindDistance()
