@@ -1,26 +1,71 @@
 package jp.co.worksap.global;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+
 
 public class Orienteering {
 	
 		public static void main(String[] args) {
 		// TODO: Implement your program
-			Scanner in =new Scanner(System.in); 
-			int width = in.nextInt();
-			int height = in.nextInt();
-			if(width<1||width>100||height<1||height>100)
+			Orienteering ort = new Orienteering();
+			int InitReturn = ort.MatrixInitiation();
+			
+			if(InitReturn == -1)
 			{
-				System.out.println("-1");
+				System.out.println(ort.FinalDistance);
 				return;
 			}
 			
-			int CheckPointNumb = 0;
+
+			//Make sure every dis matrix is carefully initiated. 
+			for(int i = 0;i<ort.CheckPointNumb+2;i++)
+			{
+				ort.SpecialPoints[i].ToOtherDis = new int[ort.CheckPointNumb+2];
+				for(int j = 0;j<ort.CheckPointNumb+2;j++)
+					ort.SpecialPoints[i].ToOtherDis[j] = Integer.MAX_VALUE;
+				ort.SpecialPoints[i].ToOtherDis[i] = 0;
+			}
+			
+			for(int i = 0;i<ort.CheckPointNumb+2;i++)
+			{
+				ort.CalcTwoPointsDistance(i);
+			}
+			
+			ort.FindDistance();
+			
+			System.out.println(ort.FinalDistance);
+				
+			return;
+ 			
+		}
+		
+		
+		public 
+		int height;
+		int width;
+		int CheckPointNumb;
+		int FinalDistance;
+		Point[] SpecialPoints;
+		Point[][] AllPoints;
+		
+		public int MatrixInitiation()
+		{
+			Scanner in =new Scanner(System.in); 
+			width = in.nextInt();
+			height = in.nextInt();
+			if(width<1||width>100||height<1||height>100)
+			{
+				FinalDistance = -1;
+				return -1;
+			}
+			
+			CheckPointNumb = 0;
 			//0:Start; 1:End; 2-(CheckPointNumb+1): checkpoint
-			Point[] SpecialPoints = new Point[20];
-			Point[][] AllPoints = new Point [width][height];
+			SpecialPoints = new Point[20];
+			AllPoints = new Point [width][height];
 			
 			////////////Initiation//////////////
 			int hi,wj;
@@ -71,28 +116,17 @@ public class Orienteering {
 			
 			if(CheckPointNumb>18)
 			{
-				System.out.println("-1");
-				return;
-			}
-
-			//Make sure every dis matrix is carefully initiated. 
-			for(int i = 0;i<CheckPointNumb+2;i++)
-			{
-				SpecialPoints[i].ToOtherDis = new int[CheckPointNumb+2];
-				for(int j = 0;j<CheckPointNumb+2;j++)
-					SpecialPoints[i].ToOtherDis[j] = Integer.MAX_VALUE;
-				SpecialPoints[i].ToOtherDis[i] = 0;
+				FinalDistance = -1;
+				return -1;
 			}
 			
+			return 0;
 			
 			
-			in.nextLine();
-			in.nextLine();
-			
- 			
 		}
 		
-		int CalcTwoPointsDistance(int OriginalIndex, Point[][] AllPoints,Point[] SpecialPoints,int width,int height,int CheckPointNumb)
+		
+		public void CalcTwoPointsDistance(int OriginalIndex)
 		{
 			//Initiation
 			 for (int i=0;i<width;i++)
@@ -144,23 +178,83 @@ public class Orienteering {
 				 
 				 //when it is black, set the final distance. 
 				 AllPoints[u.x][u.y].color = 2;
-				 if((AllPoints[u.x][u.y].type!=4)&&(AllPoints[u.x][u.y].type!=3))
-				 {
-					 for(int s = 0;s<CheckPointNumb+2;s++)
-					 {
-						 if((SpecialPoints[s].x == u.x)  && (SpecialPoints[s].y == u.y))
-						 {
-							 SpecialPoints[s].ToOtherDis[OriginalIndex] = AllPoints[u.x][u.y].distance;
-							 break;
-						 }
-					 }
-				 }
 			 }
 			 
-			 return -1;
+
+			 for(int i = 0;i<CheckPointNumb+2;i++)
+			 {
+				 SpecialPoints[i].ToOtherDis[OriginalIndex] = AllPoints[SpecialPoints[i].x][SpecialPoints[i].y].distance;
+				 SpecialPoints[OriginalIndex].ToOtherDis[i] = AllPoints[SpecialPoints[i].x][SpecialPoints[i].y].distance;
+			 }
+			 
+			 return;
 		}
 		
-		
+		public void FindDistance()
+		{
+			if(CheckPointNumb == 0)
+			{
+				if(SpecialPoints[0].ToOtherDis[1] == Integer.MAX_VALUE)
+				{
+					FinalDistance = -1;
+				}
+				else
+					FinalDistance = SpecialPoints[0].ToOtherDis[1];
+				return ;
+			}
+			else
+			{
+				FinalDistance = Integer.MAX_VALUE;
+				int tempDist;
+				int IndexBefore;
+				int IndexNow;
+				boolean stopTheList = false;
+				Arrange AllArrange = new Arrange(CheckPointNumb);  
+				AllArrange.perm(0, CheckPointNumb-1);  
+		        for (int i = 0; i < AllArrange.getArrangeList().size(); i++) 
+		        {  
+		            tempDist = 0;
+		            IndexBefore = 0;
+		            stopTheList = false;
+		            Integer OrderList[] = AllArrange.getArrangeList().get(i);
+		            
+		            for(int j = 0;j<CheckPointNumb;j++)
+		            {
+		            	IndexNow = OrderList[j];
+		            	int newDist = SpecialPoints[IndexBefore].ToOtherDis[IndexNow];
+		            	if(newDist == Integer.MAX_VALUE || tempDist > FinalDistance)
+		            	{
+		            		stopTheList = true;
+		            		break;
+		            	}
+		            	else
+		            	{
+		            		tempDist +=newDist;
+		            		IndexBefore = IndexNow;
+		            	}
+		            }
+		            		            
+		            if(stopTheList)
+		            	continue;
+		            //Calculate to the goal point.
+		            IndexNow = 1;
+		            int newDist = SpecialPoints[IndexBefore].ToOtherDis[IndexNow];
+	            	if(newDist != Integer.MAX_VALUE )
+	            	{
+	            		tempDist +=newDist;
+	            		if(tempDist<FinalDistance)
+	            			FinalDistance = tempDist;
+	            	}		             
+		        }
+		        
+		        if(FinalDistance == Integer.MAX_VALUE)
+		        {
+		        	FinalDistance = -1;
+		        }
+		        return;
+
+			}
+		}
 }
 
 
@@ -196,4 +290,55 @@ class Pair{
 	}
 	int x;
 	int y;
+};
+
+class Arrange {  
+	  
+    int total = 0;  
+    private ArrayList<Integer[]> arrangeList = new ArrayList<Integer[]>();  
+    private Integer list[];
+    private int Number;
+  
+    public Arrange(int Numb) {
+    	Number = Numb;
+    	list = new Integer [Numb];
+    	for(int i = 0;i<Numb;i++)
+    	{
+    		list[i] = i+2;
+    	}
+    }  
+  
+    private void swap(Integer list[], int k, int i) {  
+        Integer c3 = list[k];  
+        list[k] = list[i];  
+        list[i] = c3;  
+    }  
+  
+    public void perm(int k,int m) { 
+    	if (k > m) {  
+            Integer sb[] = new Integer[Number];  
+            for (int i = 0; i <= m; i++) {  
+                sb[i] = list[i];  
+            }  
+             
+            arrangeList.add(sb);  
+            total++;  
+        } else {  
+            for (int i = k; i <= m; i++) {  
+                swap(list, k, i);  
+                perm(k + 1, m);  
+                swap(list, k, i);  
+            }  
+        }  
+    }  
+  
+    public int getTotal() {  
+        return total;  
+    }  
+      
+    public ArrayList<Integer[]> getArrangeList() {  
+        return arrangeList;  
+    }  
+  
+  
 };
