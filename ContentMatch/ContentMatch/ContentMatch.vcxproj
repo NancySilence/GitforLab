@@ -70,9 +70,10 @@
     <ClInclude Include="src\ModifyResult.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="src\ArticleAnalyze.cpp" />
     <ClCompile Include="src\CompareArticles.cpp" />
+    <ClCompile Include="src\ContentMatchTest.cpp" />
+    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ModifyResult.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

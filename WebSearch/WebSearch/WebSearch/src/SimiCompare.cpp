@@ -1,76 +1,70 @@
-#include "SimiCompare.h"
 #include <algorithm>
 #include <fstream>
+#include <time.h> 
 
 #include <vector>
 
+#include "SimiCompare.h"
+
 using namespace std;
 
-vector<MetaData> SimiCompare::FilterAnalyze(void)
+vector<MetaData> SimiCompare::FilterAnalyze(string sKeyWords)
 {
+	KeyWords = sKeyWords;
 	bool getMeta;
 	
 	getMeta = GetMetaResult(KeyWords, TotalReturnResult); 	
 	if(getMeta == false)
+	{
+		cout<<"false Meta"<<endl;
 		return finalResults;
+	}
 
+	if(TotalReturnResult.metaDatas.size()==0)
+	{
+		cout<<"No Data Return!"<<endl;
+		return finalResults;
+	}	
+
+	
 	vector<string> TotalTitles;
 	vector<string> TotalAbstracts;
-
+	cout<<TotalReturnResult.totalnum<<" "<<TotalReturnResult.metaDatas.size()<<endl;
 	for(int i = 0;i<TotalReturnResult.totalnum;i++)
 	{
 		TotalTitles.push_back(TotalReturnResult.metaDatas[i].title);
 		TotalAbstracts.push_back(TotalReturnResult.metaDatas[i].abstract);
 	}	
 
-	//////////////////////////////////////////////////////////////////////////
-	//Calculate about title
-	//Init
-	char ConfigFile[40] = "config/sim.config.xml";
-	int returnResult;
-	returnResult = Sim_Init(ConfigFile,  &handle);
-	if (returnResult = 0)
-	{
-       	perror("SimCalcInitFailed\n");
-       	exit(EXIT_FAILURE);
-	}
-
 
 
 	////////////////////////start/////////////////////////
 	vector<double> SimiTitles = ListSimiCamp(KeyWords,TotalTitles);
 	
+
 	int LargestIndex = FindLargest(SimiTitles);
 
 	if(SimiTitles[LargestIndex] < SIMITHRESHOLD)
 	{
 		vector<double> SimiAbstracts = ListSimiCamp(KeyWords,TotalAbstracts);
 		LargestIndex = FindLargest(SimiAbstracts);
-
 	}
+
+	cout<<"The Largest Similar index is:"<<LargestIndex<<endl;
 
 	vector<double> SimiAbstractsBetween = ListSimiCamp(TotalReturnResult.metaDatas[LargestIndex].abstract,TotalAbstracts);
 	vector<MetaData> finalResults = FilterByThreshold(SimiAbstractsBetween);
 
 	int size = finalResults.size();
+
+	cout<<"Size After Threshold:"<<size<<endl;
 	sort(finalResults.begin(),finalResults.begin()+size,comparep);
 
 	reverse(finalResults.begin(),finalResults.begin()+size);
 
 
 	//////////////////////////end////////////////////////////
-
-	//exit
-	returnResult = Sim_Exit(handle);
-	if (returnResult = 0)
-	{
-       	perror("SimCalcExitFailed\n");
-       	exit(EXIT_FAILURE);
-	}
-
 	return finalResults;
-
-
 }
 
 
@@ -81,11 +75,12 @@ vector<double> SimiCompare::ListSimiCamp(string& key,vector<string>& Lists)
 
 	//SimiForTitle
 	//////////////////////////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Problem see TextSimAPITest
-	returnResult = Sim_Get(handle, key, Lists,Simi);
+	returnResult = Sim_Get(handle, key, Lists, Simi);
 	if (returnResult = 0)
 	{
-       	perror("SimCalcGetFailed\n");
-       	exit(EXIT_FAILURE);
+		cout<<"ListSimiFail"<<endl;
+        	perror("SimCalcGetFailed\n");
+       		exit(EXIT_FAILURE);
 	}
 	////////////////////////////////////////////////////////////////////////////////
 

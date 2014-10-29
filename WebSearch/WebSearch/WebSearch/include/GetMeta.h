@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <time.h>
+#include <ctime>
 
 using namespace std;
 
@@ -24,7 +26,7 @@ struct MetaData
 	string title;
 	string url;
 	string site;
-	string pubtime;
+	time_t pubtime;
 	string abstract;
 	string engine;
 };

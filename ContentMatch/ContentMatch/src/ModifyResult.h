@@ -26,6 +26,8 @@ public:
     int type;
 	int IndexA;
 	int IndexB;
+	string SentenceA;
+	string SentenceB;
 
 };
 

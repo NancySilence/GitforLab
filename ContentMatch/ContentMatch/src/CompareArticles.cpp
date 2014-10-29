@@ -3,7 +3,7 @@
 #include <vector>
 
 //done
-vector<ModifyResult>   CompareArticles::Processing(void)
+vector<ModifyResult>   CompareArticles::GetDiff(string inputArticleA,string inputArticleB)
 {
 
 	int AIter;
@@ -14,6 +14,9 @@ vector<ModifyResult>   CompareArticles::Processing(void)
 
 	//InitiateAllA'sLabel to False;
 	
+	FormerArticle = ArticleAnalyze(inputArticleA,handle);
+	LaterArticle =  ArticleAnalyze(inputArticleB,handle);	
+
 	InitiateMarkedLabel(FormerArticle);
 
 	for ( int BIter = 0 ;BIter < LaterArticle.SimHashValue.size() ;BIter++ )
@@ -51,6 +54,8 @@ vector<ModifyResult>   CompareArticles::Processing(void)
 			tempModify->type = 2;
 			tempModify->IndexA = MiniAIndex;
 			tempModify->IndexB = BIter;
+			tempModify->SentenceA = FormerArticle.EachSentence[MiniAIndex];
+			tempModify->SentenceB = LaterArticle.EachSentence[BIter];
 			FinalResult.push_back(*tempModify);
 		}
 		else
@@ -60,6 +65,7 @@ vector<ModifyResult>   CompareArticles::Processing(void)
 			ModifyResult* tempAdding = new ModifyResult();
 			tempAdding->type = 0;
 			tempAdding->IndexB = BIter;
+			tempAdding->SentenceB = LaterArticle.EachSentence[BIter];
 			FinalResult.push_back(*tempAdding);
 		}
 	}
@@ -73,6 +79,7 @@ vector<ModifyResult>   CompareArticles::Processing(void)
 			ModifyResult* tempDelete = new ModifyResult();
 			tempDelete->type = 1;
 			tempDelete->IndexA = AIter;
+			tempDelete->SentenceA = FormerArticle.EachSentence[AIter];
 			FinalResult.push_back(*tempDelete);
 		}
 	}

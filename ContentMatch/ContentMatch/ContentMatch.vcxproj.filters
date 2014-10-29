@@ -42,7 +42,10 @@
     <ClCompile Include="src\ModifyResult.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="src\main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ContentMatchTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

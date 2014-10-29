@@ -34,45 +34,20 @@ bool ArticleAnalyze::SplitAndCalcSimHash()
 	
 	*/
 	
-	
-	
-	
-	char ConfigFile[40] = "config/simhash.config.xml";
 	uint64_t HashResult;
-	int returnResult;
-	SH_H * handle;
-
-	
 	string  testSim= "Start from something new";
 	
-	returnResult = SH_Init(ConfigFile,  &handle);
-	if (returnResult = 0)
-	{
-       	perror("SimHashInitFailed\n");
-       	exit(EXIT_FAILURE);
-	}
-	
 	//Iteration Start
-	returnResult = SH_Get(handle, testSim, HashResult);
+	int returnResult = SH_Get(handle, testSim, HashResult);
 	if (returnResult = 0)
 	{
+		cout<<"SimHashGetFailed!"<<endl;
        	perror("SimHashGetFailed\n");
        	exit(EXIT_FAILURE);
 	}
-		EachSentence.push_back(testSim);
+	EachSentence.push_back(testSim);
 	SimHashValue.push_back(HashResult);
 	//Iteration End
-	
-	
-	returnResult = SH_Exit(handle);
-
-	if (returnResult = 0)
-	{
-       	perror("SimHashExitFailed\n");
-       	exit(EXIT_FAILURE);
-	}
-
-
 
 	return true;
 }

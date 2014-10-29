@@ -60,14 +60,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\GetMeta.cpp" />
-    <ClCompile Include="src\SimiCompare.cpp" />
-    <ClCompile Include="src\WebSearchTest.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="include\GetMeta.h" />
     <ClInclude Include="include\TextSimilarityAPI.h" />
     <ClInclude Include="src\SimiCompare.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\GetMeta.cpp" />
+    <ClCompile Include="src\SimiCompare.cpp" />
+    <ClCompile Include="src\WebSearchTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

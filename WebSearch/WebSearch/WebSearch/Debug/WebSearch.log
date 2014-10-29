@@ -1,18 +1,19 @@
-﻿生成启动时间为 2014/10/23 9:25:35。
+﻿生成启动时间为 2014/10/27 16:01:04。
      1>项目“D:\gitforlab\WebSearch\WebSearch\WebSearch\WebSearch.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在对“Debug\WebSearch.unsuccessfulbuild”执行 Touch 任务。
        ClCompile:
-         d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt src\SimiCompare.cpp src\WebSearchTest.cpp
+         d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt src\GetMeta.cpp src\SimiCompare.cpp src\WebSearchTest.cpp
          WebSearchTest.cpp
-     1>d:\gitforlab\websearch\websearch\websearch\src\simicompare.h(17): error C3861: “strptime”: 找不到标识符
-     1>d:\gitforlab\websearch\websearch\websearch\src\simicompare.h(18): error C3861: “strptime”: 找不到标识符
+     1>d:\gitforlab\websearch\websearch\websearch\src\simicompare.h(20): error C3861: “strptime”: 找不到标识符
+     1>d:\gitforlab\websearch\websearch\websearch\src\simicompare.h(21): error C3861: “strptime”: 找不到标识符
          SimiCompare.cpp
-     1>d:\gitforlab\websearch\websearch\websearch\src\simicompare.h(17): error C3861: “strptime”: 找不到标识符
-     1>d:\gitforlab\websearch\websearch\websearch\src\simicompare.h(18): error C3861: “strptime”: 找不到标识符
+     1>d:\gitforlab\websearch\websearch\websearch\src\simicompare.h(20): error C3861: “strptime”: 找不到标识符
+     1>d:\gitforlab\websearch\websearch\websearch\src\simicompare.h(21): error C3861: “strptime”: 找不到标识符
+         GetMeta.cpp
          正在生成代码...
      1>已完成生成项目“D:\gitforlab\WebSearch\WebSearch\WebSearch\WebSearch.vcxproj”(build 个目标)的操作 - 失败。
 
 生成失败。
 
-已用时间 00:00:01.17
+已用时间 00:00:07.19

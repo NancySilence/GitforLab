@@ -9,8 +9,13 @@ using namespace std;
 class ArticleAnalyze
 {
 public:
-    ArticleAnalyze(void)
+	 ArticleAnalyze(void)
 	{
+	}
+    ArticleAnalyze(string inputArticle,SH_H * thehandle)
+	{
+		handle = thehandle;
+		init(inputArticle);
 	}
 
     virtual ~ArticleAnalyze(void)
@@ -25,6 +30,7 @@ public:
     vector<string> EachSentence;
 	vector<uint64_t> SimHashValue; //以位计算，所以还需要考虑一下数据类型
 	vector<bool> HaveBeenMarked;//All Initiate to False;
+	SH_H * handle;
 
 
 };

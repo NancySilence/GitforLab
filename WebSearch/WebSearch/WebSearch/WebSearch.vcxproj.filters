@@ -15,6 +15,17 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\GetMeta.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextSimilarityAPI.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SimiCompare.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="src\GetMeta.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -24,16 +35,5 @@
     <ClCompile Include="src\WebSearchTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\SimiCompare.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GetMeta.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\TextSimilarityAPI.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
