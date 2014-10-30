@@ -10,7 +10,7 @@
 #include <ctime>
 #include <time.h> 
 
-#define SIMITHRESHOLD -2
+#define SIMITHRESHOLD 0.5
 
 using namespace std;
 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<text_processor>
+	<vocabulary_file_for_text_processor>vocabulary/vocabulary.dat</vocabulary_file_for_text_processor>
+	<max_word_consider type=int>-1</max_word_consider>
+	<text_analyzer>
+		<analyzer>
+			<encode>utf8</encode>
+			<tokenizers>
+				<tokenizer>
+					<identifier>basicTokenzier</identifier>
+					<param>
+						<lexer_identifier>basicUTF8Lexer</lexer_identifier>
+						<token_filters>
+							<token_filter>
+								<identifier>defaultEnFilter</identifier>
+								<param>
+									<en_stopword_file>dict/en_stop_word.dic</en_stopword_file>
+									<stem>false</stem>
+									<to_lowcase>true</to_lowcase>
+								</param>
+							</token_filter>
+						</token_filters>
+					</param>
+				</tokenizer>
+				<tokenizer>
+					<identifier>complexMaxMatchTokenzier</identifier>
+					<param>
+						<lexer_identifier>basicUTF8Lexer</lexer_identifier>
+						<dict_file>dict/std_dict.dat</dict_file>
+					</param>
+				</tokenizer>
+			</tokenizers>
+		</analyzer>
+	</text_analyzer>
+</text_processor>
+<doc_vec_builder>
+	<identifier>standard_doc_vec_builder</identifier>
+	<param>
+		<vocabulary_file>vocabulary/vocabulary.dat</vocabulary_file>
+		<word_vec_file>data/word_vec.dat</word_vec_file>
+	</param>
+</doc_vec_builder>
+	
+		

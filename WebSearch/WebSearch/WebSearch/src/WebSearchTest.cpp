@@ -32,14 +32,13 @@ int main(void)
 	tt = time(NULL);
 	tm* t= localtime(&tt);
 	char fileName[150];
-	sprintf(fileName,"./result/Output_%d-%02d-%02d_%02d-%02d-%02d_KeyWord-%s.txt",
+	sprintf(fileName,"./result/Output_%d-%02d-%02d_%02d-%02d-%02d.txt",
 		t->tm_year + 1900,
 		t->tm_mon + 1,
 		t->tm_mday,
 		t->tm_hour,
 		t->tm_min,
-		t->tm_sec,
-		newKeyword.c_str()
+		t->tm_sec
 		);
 	
 	ofstream fout;
