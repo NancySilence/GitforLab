@@ -23,7 +23,7 @@ ENDIF(UNIX)
 
 SET(LIBRARY_OUTPUT_PATH .)
 
-SET(SRC_LIST   src/main.cpp)
+SET(SRC_LIST   src/ContentMatchTest.cpp src/ArticleAnalyze.cpp src/CompareArticles.cpp src/ModifyResult.cpp src/SentAndPosition.cpp src/SentenceSplit.cpp)
 
 IF(UNIX)
   #static set

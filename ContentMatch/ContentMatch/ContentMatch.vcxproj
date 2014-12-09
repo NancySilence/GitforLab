@@ -62,12 +62,15 @@
   <ItemGroup>
     <None Include="config\simhash.config.xml" />
     <None Include="lib\libICTTextMining.a" />
+    <None Include="src\splitPunct.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\SimHashAPI.h" />
     <ClInclude Include="src\ArticleAnalyze.h" />
     <ClInclude Include="src\CompareArticles.h" />
     <ClInclude Include="src\ModifyResult.h" />
+    <ClInclude Include="src\SentAndPosition.h" />
+    <ClInclude Include="src\SentenceSplit.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ArticleAnalyze.cpp" />
@@ -75,6 +78,8 @@
     <ClCompile Include="src\ContentMatchTest.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ModifyResult.cpp" />
+    <ClCompile Include="src\SentAndPosition.cpp" />
+    <ClCompile Include="src\SentenceSplit.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

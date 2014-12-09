@@ -17,6 +17,7 @@
   <ItemGroup>
     <None Include="config\simhash.config.xml" />
     <None Include="lib\libICTTextMining.a" />
+    <None Include="src\splitPunct.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\SimHashAPI.h">
@@ -29,6 +30,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\ModifyResult.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SentenceSplit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SentAndPosition.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -46,6 +53,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\ContentMatchTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SentAndPosition.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SentenceSplit.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

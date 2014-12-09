@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include"ArticleAnalyze.h"
+
 using namespace std;
 
 
@@ -28,7 +29,10 @@ public:
 	int IndexB;
 	string SentenceA;
 	string SentenceB;
-
+	int SentAStart;
+	int SentALength;
+	int SentBStart;
+	int SentBLength;
 };
 
 #endif

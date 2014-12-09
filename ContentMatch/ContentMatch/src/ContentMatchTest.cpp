@@ -1,4 +1,4 @@
-#include<iostream>
+#include <iostream>
 #include "ArticleAnalyze.h"
 #include "CompareArticles.h"
 #include "ModifyResult.h"
@@ -11,9 +11,23 @@ using namespace std;
 
 int main(void)
 {
+	string SrcFile;
+	SrcFile = "source.txt";
+	ifstream infile(SrcFile.c_str());
+	std::stringstream buffer;
+	buffer<<infile.rdbuf();
+	std::string contents(buffer.str());
+
+	string another;
+	another = "another.txt";
+	ifstream inin(another.c_str());
+	std::stringstream anotherbuffer;
+	anotherbuffer<<inin.rdbuf();
+	std::string anothercontent(anotherbuffer.str());
+
 
 	CompareArticles ca = CompareArticles();
-	vector<ModifyResult> finalResult = ca.GetDiff("test","anothertest");
+	vector<ModifyResult> finalResult = ca.GetDiff(contents,anothercontent);
 
 	time_t tt;
 	tt = time(NULL);
@@ -30,7 +44,6 @@ int main(void)
 	
 	ofstream fout;
 	fout.open(fileName);
-	string temp;
 	fout<<fileName<<endl;	
 	fout<<finalResult.size()<<endl;
 
@@ -39,22 +52,24 @@ int main(void)
 	{
 		if(finalResult[i].type == 0)
 		{
-			temp = "Add:\n\tB's Sentence Index\t"+finalResult[i].IndexB;
-			temp += "\n\t\t"+finalResult[i].SentenceB;
+			fout<<finalResult[i].type<<"  Add"<<endl;
+			fout<<"\t"<<finalResult[i].IndexB<<"\t"<<finalResult[i].SentBStart<<"\t"<<finalResult[i].SentBLength<<endl;
+			fout<<"\t"<<finalResult[i].SentenceB<<endl;
 		}
 		else if(finalResult[i].type == 1)
 		{
-			temp = "Delete:\n\tA's Sentence Index\t"+finalResult[i].IndexA +finalResult[i].SentenceA;
-			temp += "\n\t\t"+finalResult[i].SentenceA;
+			fout<<finalResult[i].type<<"  Delete"<<endl;
+			fout<<"\t"<<finalResult[i].IndexA<<"\t"<<finalResult[i].SentAStart<<"\t"<<finalResult[i].SentALength<<endl;
+			fout<<"\t"<<finalResult[i].SentenceA<<endl;
 		}
-		else if(finalResult[i].type == 1)
+		else if(finalResult[i].type == 2)
 		{
-			temp = "Modify:\n\tA's Sentence Index\t"+finalResult[i].IndexA;
-			temp += "\n\t\t"+finalResult[i].SentenceA;
-			temp += "\n\tB's Sentence Index\t"+finalResult[i].IndexB;
-			temp += "\n\t\t"+finalResult[i].SentenceB;
+			fout<<finalResult[i].type<<"  Modify"<<endl;
+			fout<<"\t"<<" A:"<<finalResult[i].IndexA<<"\t"<<finalResult[i].SentAStart<<"\t"<<finalResult[i].SentALength<<endl;
+			fout<<"\t"<<finalResult[i].SentenceA<<endl;
+			fout<<"\t"<<" B:"<<finalResult[i].IndexB<<"\t"<<finalResult[i].SentBStart<<"\t"<<finalResult[i].SentBLength<<endl;
+			fout<<"\t"<<finalResult[i].SentenceB<<endl;
 		}
-		fout <<temp<<endl; 
 	}
 	
 	fout.close();

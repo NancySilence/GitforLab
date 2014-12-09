@@ -17,7 +17,7 @@ vector<ModifyResult>   CompareArticles::GetDiff(string inputArticleA,string inpu
 	FormerArticle = ArticleAnalyze(inputArticleA,handle);
 	LaterArticle =  ArticleAnalyze(inputArticleB,handle);	
 
-	InitiateMarkedLabel(FormerArticle);
+	FormerArticle.InitiateMarkedLabel();
 
 	for ( int BIter = 0 ;BIter < LaterArticle.SimHashValue.size() ;BIter++ )
 
@@ -50,23 +50,29 @@ vector<ModifyResult>   CompareArticles::GetDiff(string inputArticleA,string inpu
 		{
 			//Modify
 			FormerArticle.HaveBeenMarked[MiniAIndex] = true;
-			ModifyResult* tempModify = new ModifyResult();
-			tempModify->type = 2;
-			tempModify->IndexA = MiniAIndex;
-			tempModify->IndexB = BIter;
-			tempModify->SentenceA = FormerArticle.EachSentence[MiniAIndex];
-			tempModify->SentenceB = LaterArticle.EachSentence[BIter];
-			FinalResult.push_back(*tempModify);
+			ModifyResult tempModify = ModifyResult();
+			tempModify.type = 2;
+			tempModify.IndexA = MiniAIndex;
+			tempModify.IndexB = BIter;
+			tempModify.SentenceA = FormerArticle.RetSentAndPos[MiniAIndex].Sentence;
+			tempModify.SentAStart = FormerArticle.RetSentAndPos[MiniAIndex].StartPosition;
+			tempModify.SentALength = FormerArticle.RetSentAndPos[MiniAIndex].Length;
+			tempModify.SentenceB = LaterArticle.RetSentAndPos[BIter].Sentence;
+			tempModify.SentBStart = LaterArticle.RetSentAndPos[BIter].StartPosition;
+			tempModify.SentBLength = LaterArticle.RetSentAndPos[BIter].Length;
+			FinalResult.push_back(tempModify);
 		}
 		else
 		{
 			//Adding
 			//A is not marked in adding case
-			ModifyResult* tempAdding = new ModifyResult();
-			tempAdding->type = 0;
-			tempAdding->IndexB = BIter;
-			tempAdding->SentenceB = LaterArticle.EachSentence[BIter];
-			FinalResult.push_back(*tempAdding);
+			ModifyResult tempAdding = ModifyResult();
+			tempAdding.type = 0;
+			tempAdding.IndexB = BIter;
+			tempAdding.SentenceB = LaterArticle.RetSentAndPos[BIter].Sentence;
+			tempAdding.SentBStart = LaterArticle.RetSentAndPos[BIter].StartPosition;
+			tempAdding.SentBLength = LaterArticle.RetSentAndPos[BIter].Length;
+			FinalResult.push_back(tempAdding);
 		}
 	}
 
@@ -76,11 +82,13 @@ vector<ModifyResult>   CompareArticles::GetDiff(string inputArticleA,string inpu
 		//true means it has already been marked.
 		if(FormerArticle.HaveBeenMarked[AIter] == false)
 		{
-			ModifyResult* tempDelete = new ModifyResult();
-			tempDelete->type = 1;
-			tempDelete->IndexA = AIter;
-			tempDelete->SentenceA = FormerArticle.EachSentence[AIter];
-			FinalResult.push_back(*tempDelete);
+			ModifyResult tempDelete = ModifyResult();
+			tempDelete.type = 1;
+			tempDelete.IndexA = AIter;
+			tempDelete.SentenceA = FormerArticle.RetSentAndPos[AIter].Sentence;
+			tempDelete.SentAStart = FormerArticle.RetSentAndPos[AIter].StartPosition;
+			tempDelete.SentALength = FormerArticle.RetSentAndPos[AIter].Length;
+			FinalResult.push_back(tempDelete);
 		}
 	}
 
@@ -115,14 +123,4 @@ int  CompareArticles::CalcSimHashDistance(uint64_t Numb1,uint64_t Numb2)
 	x = (x + (x >> 4)) & m4;        //put count of each 8 bits into those 8 bits 
 	return (x * h01)>>56;  //returns left 8 bits of x + (x<<8) + (x<<16) + (x<<24) + ... 
 
-}
-
-//done!
-void CompareArticles::InitiateMarkedLabel(ArticleAnalyze A)
-{
-	A.HaveBeenMarked.clear();
-	for(int i =0;i<A.SimHashValue.size();i++)
-	{
-		A.HaveBeenMarked.push_back(false);
-	}
 }

@@ -1,53 +1,42 @@
 #include "ArticleAnalyze.h"
 #include "../include/SimHashAPI.h"
 #include <string>
+#include "SentenceSplit.h"
+#include "SentAndPosition.h"
+
+void ArticleAnalyze::init(string inputArticle)
+{
+	vector<SentAndPosition> RetResult = vector<SentAndPosition>();
+	RetSentAndPos = sp.split(inputArticle);
+}
+
 
 bool ArticleAnalyze::SplitAndCalcSimHash()
 {
-	//Split task
-
-	//for each string.
-	/*
-	
-	//for each string.
-	char ConfigFile[40] = "config/simhash.config.xml";
 	uint64_t HashResult;
-	int returnResult;
-	SH_H * handle;
-
-	//Iteration Start
-	string  testSim= "Start from something new";
-	
-	returnResult = SH_Init(ConfigFile,  &handle);
-	cout<<"InitResult:"<<returnResult<<endl;
-
-	returnResult = SH_Get(handle, testSim, HashResult);
-	cout<<"GetResult:"<<returnResult<<endl;
-	cout<<endl<<"HashResult:!!"<<HashResult<<endl;
-	returnResult = SH_Exit(handle);
-
-	cout<<"ExitResult:"<<returnResult<<endl;
-	return 0;
-	
-	
-	
-	
-	*/
-	
-	uint64_t HashResult;
-	string  testSim= "Start from something new";
-	
-	//Iteration Start
-	int returnResult = SH_Get(handle, testSim, HashResult);
-	if (returnResult = 0)
+	SimHashValue.clear();
+	for(int ix = 0;ix <RetSentAndPos.size();ix++)
 	{
-		cout<<"SimHashGetFailed!"<<endl;
-       	perror("SimHashGetFailed\n");
-       	exit(EXIT_FAILURE);
+		string tmp = RetSentAndPos[ix].Sentence;
+		int returnResult = SH_Get(handle, tmp, HashResult);
+		if (returnResult = 0)
+		{
+			cout<<"SimHashGetFailed!"<<endl;
+       		perror("SimHashGetFailed\n");
+       		exit(EXIT_FAILURE);
+		}
+		SimHashValue.push_back(HashResult);
 	}
-	EachSentence.push_back(testSim);
-	SimHashValue.push_back(HashResult);
-	//Iteration End
-
 	return true;
+}
+
+void ArticleAnalyze::InitiateMarkedLabel(void)
+{
+	HaveBeenMarked.clear();
+	for(int i =0;i<SimHashValue.size();i++)
+	{
+		bool insert = false;
+		HaveBeenMarked.push_back(insert);
+	}
+
 }
