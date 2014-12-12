@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<text_processor>
+	<text_analyzer>
+		<is_thread_safe>true</is_thread_safe>
+		<analyzer>
+			<encode>utf8</encode>
+			<tokenizers>
+				<tokenizer>
+					<identifier>basicWeiboTokenzier</identifier>
+					<param>
+						<lexer_identifier>basicUTF8Lexer</lexer_identifier>
+					</param>
+				</tokenizer>
+				<tokenizer>
+					<identifier>chNGramTokenzier</identifier>
+					<param>
+						<lexer_identifier>basicUTF8Lexer</lexer_identifier>
+						<max_n type=int>3</max_n>
+					</param>
+				</tokenizer>
+			</tokenizers>
+		</analyzer>
+	</text_analyzer>
+</text_processor>

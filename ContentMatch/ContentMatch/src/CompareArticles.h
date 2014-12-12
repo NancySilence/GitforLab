@@ -27,6 +27,7 @@ public:
        		perror("SimHashInitFailed\n");
        		exit(EXIT_FAILURE);
 		}
+		currentState = returnResult;
 	}
 
     virtual ~CompareArticles(void)
@@ -38,6 +39,7 @@ public:
        		perror("SimHashExitFailed\n");
        		exit(EXIT_FAILURE);
 		}
+		currentState = returnResult;
 
 	}
 
@@ -52,6 +54,7 @@ private:
     ArticleAnalyze FormerArticle, LaterArticle;
     vector<ModifyResult> FinalResult;
 	SH_H * handle;
+	int currentState;
 };
 
 
